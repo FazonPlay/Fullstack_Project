@@ -2,27 +2,30 @@
 /**
  * @var PDO $pdo
  */
-require_once("includes/auth.php");
+require "model/login.php";
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest'
-){
+) {
     $errors = [];
     $username = $_POST['username'] ?? null;
     $password = $_POST['password'] ?? null;
 
-    if(null === $username || null === $password) {
+    if (null === $username || null === $password) {
         $errors[] = "The login or password is missing";
     } else {
-        $connect = login($pdo, $username, $password);
+        $user = login($pdo, $username, $password);
 
-        if (empty($connect) || !password_verify($password, $connect['password'])) {
-            $errors[] = "Erreur d'identification, veuillez essayer à nouveau";
-        } elseif(0 === $connect['enabled']) {
-            $errors[] = "Ce compte est désactivé";
-        } else {
+        if (!$user) {
+            $errors[] = "User not found";
+        }
+        elseif (!password_verify($password, $user['password'])) {
+            $errors[] = "Invalid password";
+        }
+        else {
             $_SESSION["auth"] = true;
-            $_SESSION["username"] = $connect['username'];
+            $_SESSION["username"] = $user['username'];
+            $_SESSION["is_admin"] = (bool)$user['is_admin']; // Add this line
             header("Content-Type: application/json");
             echo json_encode(['authentication' => true]);
             exit();
@@ -35,5 +38,3 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         exit();
     }
 }
-
-require("view/login.php");

@@ -1,5 +1,5 @@
 <?php
-require("../_partials/errors.php")
+require "_partials/errors.php";
 ?>
 <div class="container vh-100 d-flex justify-content-center align-items-center">
     <div class="row justify-content-center w-100">
@@ -36,7 +36,7 @@ require("../_partials/errors.php")
                 return false
             }
 
-            const loginResult = await login(loginForm.elements['username'].value, loginForm.elements.pass.value)
+            const loginResult = await login(loginForm.elements['username'].value, loginForm.elements.password.value)
 
             if (loginResult.hasOwnProperty('authentication')){
                 document.location.href = 'index.php'

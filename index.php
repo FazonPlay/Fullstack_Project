@@ -1,35 +1,28 @@
 <?php
+session_start();
 include 'includes/database.php';
-include 'includes/auth.php';
 
+
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+    $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest'
+) {
+        require "controller/login.php";
+    exit();
+}
+
+
+$component = $_GET['component'] ?? null;
+
+if ($component === 'login') {
+    require "view/login.php";
+    exit();
+}
 if (isset($_GET['disconnect'])) {
     session_destroy();
     header("Location: index.php");
     exit();
 }
 
-if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-    $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest'
-) {
-    if (!empty($_SESSION['auth'])) {
-        $componentName = !empty($_GET['component'])
-            ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
-            : 'users';
-
-        $actionName = !empty($_GET['action'])
-            ? htmlspecialchars($_GET['action'], ENT_QUOTES, 'UTF-8')
-            : null;
-
-        if (file_exists("controller/$componentName.php")) {
-            require "controller/$componentName.php";
-        } else {
-            throw new Exception("Component '$componentName' does not exist");
-        }
-    } else {
-        require "controller/login.php";
-    }
-    exit();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
