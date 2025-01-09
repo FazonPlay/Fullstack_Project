@@ -12,9 +12,18 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 
 
 $component = $_GET['component'] ?? null;
-
 if ($component === 'login') {
     require "view/login.php";
+    exit();
+}
+if ($component === 'users') {
+    if(isset ($_SESSION['id']) || $_SESSION['is_admin'] != 1) {
+        echo "access denied";
+        exit();
+    }
+    
+    require "view/users.php";
+
     exit();
 }
 if (isset($_GET['disconnect'])) {
@@ -35,7 +44,6 @@ if (isset($_GET['disconnect'])) {
 <body>
 <div class="container">
     <?php require "_partials/navbar.php"; ?>
-    <?php require "view/dashboard.php"; ?>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
