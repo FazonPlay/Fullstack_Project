@@ -25,7 +25,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         else {
             $_SESSION["auth"] = true;
             $_SESSION["username"] = $user['username'];
-            $_SESSION["is_admin"] = (bool)$user['is_admin']; // Add this line
+            $_SESSION["is_admin"] = (bool)$user['is_admin'];
             header("Content-Type: application/json");
             echo json_encode(['authentication' => true]);
             exit();
@@ -38,3 +38,5 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         exit();
     }
 }
+require "view/login.php";
+
