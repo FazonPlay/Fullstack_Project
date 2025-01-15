@@ -16,6 +16,7 @@ require "_partials/errors.php";
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-primary" name="valid_login" id="valid-login-btn">Confirm</button>
+                    <button type="button" class="btn btn-secondary ms-2" name="create_account" id="create-account-btn">Create Account</button>
                 </div>
             </form>
         </div>
@@ -24,8 +25,8 @@ require "_partials/errors.php";
 <script src="./assets/js/services/login.js" type="module"></script>
 <script type="module">
     import {login} from "./assets/js/services/login.js";
-
     document.addEventListener('DOMContentLoaded', () => {
+        const createAccountBtn = document.querySelector('#create-account-btn');
         const validLoginBtn = document.querySelector('#valid-login-btn')
         const loginForm = document.querySelector('#login-form')
         const errorElement = document.querySelector('#errors')
@@ -48,6 +49,9 @@ require "_partials/errors.php";
 
                 errorElement.innerHTML = errors.join('')
             }
+        })
+        createAccountBtn.addEventListener('click', () => {
+            document.location.href = 'index.php?component=user'
         })
     })
 

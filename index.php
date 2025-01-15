@@ -7,25 +7,38 @@ if (isset($_GET['disconnect'])) {
     header("Location: index.php");
     exit();
 }
-
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest'
 ) {
-    require "controller/login.php";
-    exit();
-}
+
 $component = $_GET['component'] ?? null;
 
-if ($component === 'login') {
-    require "controller/login.php";
+switch ($component)
+{
+    case 'login':
+        require 'controller/login.php';
+        break;
+    case 'admin':
+        require 'controller/admin.php';
+        break;
+    case 'user':
+        require 'controller/user.php';
+        break;
+    case 'users':
+        require 'controller/users.php';
+        break;
+    case 'times':
+        require 'controller/times.php';
+        break;
+    case 'game':
+        require 'controller/game.php';
+        break;
+
+}
+
 }
 
 
-if($component === 'times') {
-    require "controller/times.php";
-}
-
-require "controller/dashboard.php";
 ?>
 
 
@@ -44,7 +57,7 @@ require "controller/dashboard.php";
         require "_partials/navbar.php";
         $componentName = !empty($_GET['component'])
             ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
-            : 'users';
+            : 'dashboard';
 
         if (file_exists("controller/$componentName.php")) {
             require "controller/$componentName.php";

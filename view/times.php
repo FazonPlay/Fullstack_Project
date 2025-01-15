@@ -4,9 +4,6 @@
  */
 ?>
 
-
-
-
 <table class="table">
     <thead>
     <tr>
@@ -17,18 +14,26 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($times as $time): ?>
+<!--    --><?php
+//        if(isset($_SESSION['is_admin === 1'])) ?>
+    <?php if (!empty($times)): ?>
+        <?php foreach ($times as $time): ?>
+            <tr>
+                <td><?= htmlspecialchars($time['game_id']) ?></td>
+                <td><?= htmlspecialchars($time['username']) ?></td>
+                <td><?= htmlspecialchars($time['duration']) ?></td>
+                <td>
+                    <form method="post" action="index.php?component=times">
+                        <input type="hidden" name="delete_id" value="<?= htmlspecialchars($time['game_id']) ?>">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
         <tr>
-            <td><?= $time['id'] ?></td>
-            <td><?= htmlspecialchars($time['username']) ?></td>
-            <td><?= $time['time_played'] ?></td>
-            <td>
-                <form method="post" action="index.php?component=times">
-                    <input type="hidden" name="delete_id" value="<?= $time['id'] ?>">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
+            <td colspan="4">No times available</td>
         </tr>
-    <?php endforeach; ?>
+    <?php endif; ?>
     </tbody>
 </table>

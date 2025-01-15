@@ -28,7 +28,19 @@ function get_top_five(PDO $pdo, int $user_id): array | string {
 //    return $times;
 
 function get_times(PDO $pdo): array | string {
-    $query = "SELECT * FROM game_times";
+    $query = "        SELECT 
+            gt.id AS game_id, 
+            u.username, 
+            gt.duration, 
+            gt.created_at 
+        FROM 
+            game_times AS gt 
+        JOIN 
+            users AS u 
+        ON 
+            gt.user_id = u.id 
+        ORDER BY 
+            gt.duration ASC ";
     $prep = $pdo->prepare($query);
     try
     {
