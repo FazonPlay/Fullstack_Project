@@ -50,9 +50,10 @@ require "_partials/errors.php";
                 errorElement.innerHTML = errors.join('')
             }
         })
-        createAccountBtn.addEventListener('click', () => {
-            document.location.href = 'index.php?component=user'
-        })
+        createAccountBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'index.php?component=user';
+        });
     })
 
 </script>

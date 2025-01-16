@@ -40,7 +40,6 @@
                 return false
             }
 
-            // Check if passwords match
             const password = createAccountForm.elements['password'].value
             const confirmPassword = createAccountForm.elements['confirm-password'].value
 
@@ -55,8 +54,7 @@
             )
 
             if (createResult.hasOwnProperty('success')) {
-                // Redirect to login page
-                document.location.href = 'index.php'
+                window.location.href = 'index.php'
             } else if (createResult.hasOwnProperty('errors')) {
                 const errors = []
                 for (let i = 0; i < createResult.errors.length; i++) {

@@ -14,9 +14,7 @@
     </tr>
     </thead>
     <tbody>
-<!--    --><?php
-//        if(isset($_SESSION['is_admin === 1'])) ?>
-    <?php if (!empty($times)): ?>
+ad<?php if (!empty($times)): ?>
         <?php foreach ($times as $time): ?>
             <tr>
                 <td><?= htmlspecialchars($time['game_id']) ?></td>

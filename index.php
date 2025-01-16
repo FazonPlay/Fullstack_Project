@@ -8,13 +8,11 @@ if (isset($_GET['disconnect'])) {
     exit();
 }
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-    $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest'
-) {
+    $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
 
-$component = $_GET['component'] ?? null;
+    $component = $_GET['component'] ?? null;
 
-switch ($component)
-{
+    switch ($component) {
     case 'login':
         require 'controller/login.php';
         break;
@@ -33,13 +31,16 @@ switch ($component)
     case 'game':
         require 'controller/game.php';
         break;
-
-}
-
+        // ... other cases ...
+    }
+    exit(); // Add this to prevent further execution
 }
 
 
 ?>
+
+
+
 
 
 <!DOCTYPE html>
@@ -53,19 +54,23 @@ switch ($component)
 <body>
 <div class="container">
     <?php
+    $componentName = !empty($_GET['component'])
+        ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
+        : 'dashboard';
+
     if(!empty($_SESSION['auth'])) {
         require "_partials/navbar.php";
-        $componentName = !empty($_GET['component'])
-            ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
-            : 'dashboard';
-
         if (file_exists("controller/$componentName.php")) {
             require "controller/$componentName.php";
         } else {
             throw new Exception("Component '$componentName' does not exist");
         }
     } else {
-        require "controller/login.php";
+        if ($componentName === 'user') {
+            require "controller/user.php";  // Allow access to user creation
+        } else {
+            require "controller/login.php";
+        }
     }
     ?>
 </div>

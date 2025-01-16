@@ -34,7 +34,9 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         echo json_encode(['errors' => $errors]);
         exit();
     }
+} else {
+    // Just display the user creation form for regular page requests
+    require "view/user.php";
 }
-require "view/user.php";
 
 
