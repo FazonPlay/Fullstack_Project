@@ -12,31 +12,47 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 
     $component = $_GET['component'] ?? null;
 
-    switch ($component) {
-    case 'login':
-        require 'controller/login.php';
-        break;
-    case 'admin':
-        require 'controller/admin.php';
-        break;
-    case 'user':
-        require 'controller/user.php';
-        break;
-    case 'users':
-        require 'controller/users.php';
-        break;
-    case 'times':
-        require 'controller/times.php';
-        break;
-    case 'game':
-        require 'controller/game.php';
-        break;
-        // ... other cases ...
+    if (file_exists("controller/$component.php")) {
+        require "controller/$component.php";
+    } else {
+        throw new Exception("Component '$component' does not exist");
     }
-    exit(); // Add this to prevent further execution
+
+
+
+
+
 }
 
-
+//    if(isset($_SESSION['auth']) && $component === 'admin') {
+//        if(!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+//            echo "You are not authorized to access this page";
+//        }
+//        exit();
+//    }
+//
+//    switch ($component) {
+//    case 'login':
+//        require 'controller/login.php';
+//        break;
+//    case 'admin':
+//        require 'controller/admin.php';
+//        break;
+//    case 'user':
+//        require 'controller/user.php';
+//        break;
+//    case 'users':
+//        require 'controller/users.php';
+//        break;
+//    case 'times':
+//        require 'controller/times.php';
+//        break;
+//    case 'game':
+//        require 'controller/game.php';
+//        break;
+//    }
+//    exit();
+//}
 ?>
 
 
@@ -56,18 +72,22 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     <?php
     $componentName = !empty($_GET['component'])
         ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
-        : 'dashboard';
+        : (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? 'admin' : 'dashboard');
 
     if(!empty($_SESSION['auth'])) {
         require "_partials/navbar.php";
-        if (file_exists("controller/$componentName.php")) {
+
+        if ($componentName === 'admin' && (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true)) {
+            echo '<div class="alert alert-danger">Access Denied: Administrator privileges required.</div>';
+            require "controller/dashboard.php"; // Redirect to dashboard instead
+        } else if (file_exists("controller/$componentName.php")) {
             require "controller/$componentName.php";
         } else {
             throw new Exception("Component '$componentName' does not exist");
         }
     } else {
         if ($componentName === 'user') {
-            require "controller/user.php";  // Allow access to user creation
+            require "controller/user.php";
         } else {
             require "controller/login.php";
         }

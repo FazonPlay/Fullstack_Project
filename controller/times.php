@@ -1,4 +1,5 @@
 <?php
+$is_admin = $_SESSION["is_admin"] === true;
 
 require "model/times.php";
 
