@@ -22,3 +22,23 @@ function create_user(
         return null;
     }
 }
+
+function getUsers(PDO $pdo, ): array | string
+{
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $query="SELECT *  FROM users";
+    $prep = $pdo->prepare($query);
+    try
+    {
+        $prep->execute();
+    }
+    catch (PDOException $e)
+    {
+        return " erreur : ".$e->getCode() .' :</b> '. $e->getMessage();
+    }
+
+    $res = $prep->fetchAll();
+    $prep->closeCursor();
+
+    return $res;
+}

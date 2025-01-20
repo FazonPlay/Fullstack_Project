@@ -14,9 +14,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?component=times">Check times</a>
                 </li>
-                <li class="nav-item">
+                <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
                     <a class="nav-link" href="index.php?component=users">Check users</a>
-                </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?component=dashboard">Dashboard</a>
                 </li>
