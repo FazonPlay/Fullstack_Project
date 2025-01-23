@@ -65,7 +65,7 @@
         })
 
         backBtn.addEventListener('click', () => {
-            document.location.href = 'index.php'
+            document.location.href = 'index.php?component=login'
         })
     })
 </script>

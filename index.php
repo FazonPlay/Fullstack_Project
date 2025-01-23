@@ -6,7 +6,6 @@ $dotenv->safeLoad();
 include 'includes/database.php';
 require ("includes/helper.php");
 
-
 if (isset($_GET['disconnect'])) {
     session_destroy();
     header("Location: index.php");
@@ -87,6 +86,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
             require "controller/dashboard.php";
             } else if ($componentName === 'game' && !isset($_SESSION['auth'])) {
             echo '<div class="alert alert-danger">Access Denied: You must be logged in to play the game.</div>';
+
+            // document.location.href = 'index.php?component=login';
         } else if (file_exists("controller/$componentName.php")) {
             require "controller/$componentName.php";
         } else {

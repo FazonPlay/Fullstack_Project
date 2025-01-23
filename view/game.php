@@ -19,23 +19,24 @@
 </div>
 
 <script src="./assets/js/game.js" type="module"></script>
-
-
-
 <script type="module">
-    import { initializeGame, endGame } from './assets/js/game.js';
+    import { initializeGame, isGameLocked} from './assets/js/game.js';
 
     // Start the game when the page loads
     document.addEventListener('DOMContentLoaded', () => {
+
+
         const startGameBtn = document.querySelector('#start-game-btn');
         startGameBtn.addEventListener('click', () => {
+
             startGameBtn.disabled = true;
             initializeGame();
-            if(isGameLocked === true) {
-                startGameBtn.disabled = false;
-            }
+
         });
 
+
+
     });
+
 
 </script>

@@ -1,5 +1,5 @@
 // Game configuration constants
-export const GAME_DURATION = 1; // time replaced to 10 seconds for debugging purposes
+export const GAME_DURATION = 300; // time replaced to 10 seconds for debugging purposes
 export const CARD_PAIRS = 8; // Total number of unique card pairs to match
 export const FLIP_DELAY = 1000; // Delay in milliseconds before flipping unmatched cards back
 
@@ -25,7 +25,7 @@ export const initializeGame = () => {
         const card = document.createElement('div');
         card.innerHTML = `
             <div class="card" data-card-id="${index}" data-image="${imagePath}">
-                <div class="d-flex align-items-center justify-content-center h-100">
+                <div class=" align-items-center justify-content-center">
                     <div class="card-back">
                         <img src="assets/img/card-cover.png" alt="Card back">
                         </div>
@@ -50,7 +50,7 @@ let timeLeft = GAME_DURATION; // Countdown timer in seconds
 let timer = null; // Reference to the interval timer
 let flippedCards = []; // Stores the currently flipped cards
 let matchedPairs = 0; // Tracks the number of matched pairs
- let isGameLocked = false; // Locks the game board to prevent actions during animations
+export let isGameLocked = false; // Locks the game board to prevent actions during animations
 
 // Function to generate card image paths
 const generateCardImages = () => {
@@ -149,9 +149,19 @@ const updateProgressBar = () => {
 };
 
 // Ends the game and shows a message
-export const endGame = (isWin) => {
+const endGame = (isWin) => {
+
+    const startGameBtn = document.querySelector('#start-game-btn');
+
     clearInterval(timer); // Stop the timer
     isGameLocked = true; // Lock the game board
 
-        alert ('timed out');
+    if(isGameLocked === true) {
+        startGameBtn.disabled = false;
+    }
+
+
+
+    alert(isWin ? 'Congratulations! You won!' : 'Game over! You lost!'); // Show win/loss message
+
 };
