@@ -70,6 +70,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     <meta charset="UTF-8">
     <title>Memory Game</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -79,24 +80,19 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
         : (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? 'admin' : 'dashboard');
 
-    if(!empty($_SESSION['auth'])) {
         require "_partials/navbar.php";
 
         if ($componentName === 'admin' && (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true)) {
             echo '<div class="alert alert-danger">Access Denied: Administrator privileges required.</div>';
-            require "controller/dashboard.php"; // Redirect to dashboard instead
+            require "controller/dashboard.php";
+            } else if ($componentName === 'game' && !isset($_SESSION['auth'])) {
+            echo '<div class="alert alert-danger">Access Denied: You must be logged in to play the game.</div>';
         } else if (file_exists("controller/$componentName.php")) {
             require "controller/$componentName.php";
         } else {
             throw new Exception("Component '$componentName' does not exist");
         }
-    } else {
-        if ($componentName === 'user') {
-            require "controller/user.php";
-        } else {
-            require "controller/login.php";
-        }
-    }
+
     ?>
 </div>
 
