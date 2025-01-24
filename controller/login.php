@@ -7,6 +7,9 @@ require "model/login.php";
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest'
 ) {
+    $user = login($pdo, $_POST['username'], $_POST['password']);
+    $_SESSION['user_id'] = $user['id']; // Assuming the login query returned $user['id'] from the database
+
     $errors = [];
     $username = $_POST['username'] ?? null;
     $password = $_POST['password'] ?? null;
@@ -24,6 +27,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         }
         else {
             $_SESSION["auth"] = true;
+
             $_SESSION["username"] = $user['username'];
             $_SESSION["is_admin"] = (bool)$user['is_admin'];
             header("Content-Type: application/json");

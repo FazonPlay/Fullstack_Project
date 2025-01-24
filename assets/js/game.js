@@ -1,47 +1,6 @@
-// Game configuration constants
-export const GAME_DURATION = 300; // time replaced to 10 seconds for debugging purposes
-export const CARD_PAIRS = 8; // Total number of unique card pairs to match
-export const FLIP_DELAY = 1000; // Delay in milliseconds before flipping unmatched cards back
 
-
-export const initializeGame = () => {
-    // Reset game state
-    timeLeft = GAME_DURATION;
-    flippedCards = [];
-    matchedPairs = 0;
-    isGameLocked = false;
-
-    // Generate card images and shuffle them
-    const cardImages = generateCardImages();
-    const cards = [...cardImages, ...cardImages]; // Duplicate images for pairs
-    const shuffledCards = shuffleArray(cards);
-
-    // Clear the game board
-    const gameBoard = document.querySelector('#game-board');
-    gameBoard.innerHTML = '';
-
-    // Create and add card elements to the board
-    shuffledCards.forEach((imagePath, index) => {
-        const card = document.createElement('div');
-        card.innerHTML = `
-            <div class="card" data-card-id="${index}" data-image="${imagePath}">
-                <div class=" align-items-center justify-content-center">
-                    <div class="card-back">
-                        <img src="assets/img/card-cover.png" alt="Card back">
-                        </div>
-                    <img src="${imagePath}" class="card-front d-none" alt="Card image"> <!-- Image side -->
-                </div>
-            </div>
-        `;
-        gameBoard.appendChild(card); // Add card to the board
-        card.addEventListener('click', () => handleCardClick(card)); // Attach click event
-    });
-
-    // Start the game timer
-    startTimer();
-};
-
-
+import { saveGameTime } from './services/saveState.js';
+import { CARD_PAIRS, GAME_DURATION, FLIP_DELAY } from './shared/constant.js';
 
 
 
@@ -50,10 +9,10 @@ let timeLeft = GAME_DURATION; // Countdown timer in seconds
 let timer = null; // Reference to the interval timer
 let flippedCards = []; // Stores the currently flipped cards
 let matchedPairs = 0; // Tracks the number of matched pairs
-export let isGameLocked = false; // Locks the game board to prevent actions during animations
+let isGameLocked = false; // Locks the game board to prevent actions during animations
 
 // Function to generate card image paths
-const generateCardImages = () => {
+export const generateCardImages = () => {
     const cardImages = [];
     for (let i = 1; i <= CARD_PAIRS; i++) {
         cardImages.push(`assets/img/card-${i}.png`); // Add paths for each card image
@@ -62,7 +21,7 @@ const generateCardImages = () => {
 };
 
 // Function to shuffle an array using the Fisher-Yates algorithm
-const shuffleArray = (array) => {
+export const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1)); // Random index
         [array[i], array[j]] = [array[j], array[i]]; // Swap elements
@@ -73,7 +32,7 @@ const shuffleArray = (array) => {
 // Initializes the game board and resets the state
 
 // Handles the logic when a card is clicked
-const handleCardClick = (card) => {
+export const handleCardClick = (card) => {
     if (isGameLocked || flippedCards.length >= 2) return; // Ignore clicks if locked or two cards are flipped
 
     const cardElement = card.querySelector('.card');
@@ -94,7 +53,7 @@ const handleCardClick = (card) => {
 };
 
 // Checks if two flipped cards match
-const checkForMatch = () => {
+export const checkForMatch = () => {
     const [card1, card2] = flippedCards;
     const image1 = card1.querySelector('.card').dataset.image;
     const image2 = card2.querySelector('.card').dataset.image;
@@ -121,7 +80,7 @@ const checkForMatch = () => {
 };
 
 // Starts the countdown timer
-const startTimer = () => {
+export const startTimer = () => {
     timer = setInterval(() => {
         timeLeft--; // Decrease time
         updateTimerDisplay(); // Update displayed time
@@ -134,7 +93,7 @@ const startTimer = () => {
 };
 
 // Updates the time display
-const updateTimerDisplay = () => {
+export const updateTimerDisplay = () => {
     const minutes = Math.floor(timeLeft / 60); // Calculate minutes
     const seconds = timeLeft % 60; // Calculate remaining seconds
     document.querySelector('#timer').textContent =
@@ -142,26 +101,24 @@ const updateTimerDisplay = () => {
 };
 
 // Updates the progress bar to reflect remaining time
-const updateProgressBar = () => {
+export const updateProgressBar = () => {
     const progress = (timeLeft / GAME_DURATION) * 100; // Calculate percentage
     const progressBar = document.querySelector('#progress-bar');
     progressBar.style.width = `${progress}%`; // Adjust width of the progress bar
 };
 
+
 // Ends the game and shows a message
-const endGame = (isWin) => {
-
-    const startGameBtn = document.querySelector('#start-game-btn');
-
+export const endGame = async (isWin) => {
     clearInterval(timer); // Stop the timer
     isGameLocked = true; // Lock the game board
 
-    if(isGameLocked === true) {
-        startGameBtn.disabled = false;
-    }
+    const startGameBtn = document.querySelector('#start-game-btn');
+    startGameBtn.disabled = false; // Enable the start game button
 
-
-
-    alert(isWin ? 'Congratulations! You won!' : 'Game over! You lost!'); // Show win/loss message
-
+    if(isWin) {
+    const timeSpent = GAME_DURATION - timeLeft;
+    const response = await saveGameTime(timeSpent);
+}
 };
+

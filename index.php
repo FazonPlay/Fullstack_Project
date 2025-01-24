@@ -14,6 +14,7 @@ if (isset($_GET['disconnect'])) {
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
 
+
     $component = $_GET['component'] ?? null;
 
     if (file_exists("controller/$component.php")) {
@@ -21,47 +22,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     } else {
         throw new Exception("Component '$component' does not exist");
     }
-
-
-
-
-
 }
-
-//    if(isset($_SESSION['auth']) && $component === 'admin') {
-//        if(!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-//            echo "You are not authorized to access this page";
-//        }
-//        exit();
-//    }
-//
-//    switch ($component) {
-//    case 'login':
-//        require 'controller/login.php';
-//        break;
-//    case 'admin':
-//        require 'controller/admin.php';
-//        break;
-//    case 'user':
-//        require 'controller/user.php';
-//        break;
-//    case 'users':
-//        require 'controller/users.php';
-//        break;
-//    case 'times':
-//        require 'controller/times.php';
-//        break;
-//    case 'game':
-//        require 'controller/game.php';
-//        break;
-//    }
-//    exit();
-//}
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">

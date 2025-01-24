@@ -16,23 +16,5 @@ function login(PDO $pdo, string $username, string $password)
     }
 }
 
-//}
-//
-//function logout()
-//{
-//    session_destroy();
-//    header('Location: index.php');
-//    exit();
-//}
-//
-//function is_logged()
-//{
-//    return isset($_SESSION['user_id']);
-//}
-//
-//function is_admin()
-//{
-//    return isset($_SESSION['is_admin']) && $_SESSION['is_admin'];
-//}
 
 ?>
