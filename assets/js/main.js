@@ -1,18 +1,7 @@
-import { generateCardImages, shuffleArray, handleCardClick, startTimer} from './game.js';''
-import { GAME_DURATION, CARD_PAIRS, FLIP_DELAY } from './shared/constant.js';
+import {generateCardImages, shuffleArray, handleCardClick, startTimer, resetGameState} from './game.js';''
+import { GAME_DURATION, CARD_PAIRS, FLIP_DELAY } from './components/shared/constant.js';
 export const initializeGame = () => {
-    let timeLeft = GAME_DURATION; // Countdown timer in seconds
-    let timer = null; // Reference to the interval timer
-    let flippedCards = []; // Stores the currently flipped cards
-    let matchedPairs = 0; // Tracks the number of matched pairs
-    let isGameLocked = false; // Locks the game board to prevent actions during animations
-
-    // Reset game state
-    timeLeft = GAME_DURATION;
-    flippedCards = [];
-    matchedPairs = 0;
-    isGameLocked = false;
-
+    resetGameState(); // Reset the game state
     // Generate card images and shuffle them
     const cardImages = generateCardImages();
     const cards = [...cardImages, ...cardImages]; // Duplicate images for pairs

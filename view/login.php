@@ -52,7 +52,7 @@ require "_partials/errors.php";
         })
         createAccountBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'index.php?component=user';
+            window.location.href = 'index.php?component=create_user';
         });
     })
 

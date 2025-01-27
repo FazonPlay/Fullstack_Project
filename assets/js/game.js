@@ -1,8 +1,6 @@
 
 import { saveGameTime } from './services/saveState.js';
-import { CARD_PAIRS, GAME_DURATION, FLIP_DELAY } from './shared/constant.js';
-
-
+import { CARD_PAIRS, GAME_DURATION, FLIP_DELAY } from './components/shared/constant.js';
 
 // Game state variables
 let timeLeft = GAME_DURATION; // Countdown timer in seconds
@@ -19,6 +17,16 @@ export const generateCardImages = () => {
     }
     return cardImages;
 };
+
+export const resetGameState = () => {
+    timeLeft = GAME_DURATION; // Reset timer
+    timer = null;             // Clear the timer reference
+    flippedCards = [];        // Clear flipped cards
+    matchedPairs = 0;         // Reset matched pairs count
+    isGameLocked = false;     // Unlock the board
+};
+
+
 
 // Function to shuffle an array using the Fisher-Yates algorithm
 export const shuffleArray = (array) => {
@@ -81,15 +89,16 @@ export const checkForMatch = () => {
 
 // Starts the countdown timer
 export const startTimer = () => {
+    clearInterval(timer); // Prevent duplicate intervals
     timer = setInterval(() => {
-        timeLeft--; // Decrease time
-        updateTimerDisplay(); // Update displayed time
-        updateProgressBar(); // Update progress bar
+        timeLeft--;
+        updateTimerDisplay();
+        updateProgressBar();
 
-        if (timeLeft <= 0) { // If time runs out
-            endGame(false); // End the game with a loss
+        if (timeLeft <= 0) {
+            endGame(false);
         }
-    }, 1000); // Update every second
+    }, 1000);
 };
 
 // Updates the time display
@@ -118,7 +127,10 @@ export const endGame = async (isWin) => {
 
     if(isWin) {
     const timeSpent = GAME_DURATION - timeLeft;
-    const response = await saveGameTime(timeSpent);
-}
+        await saveGameTime(timeSpent);
+        alert('Congratulations! You won the game!');
+    } else {
+        alert('Time is up! Game over!');
+    }
 };
 

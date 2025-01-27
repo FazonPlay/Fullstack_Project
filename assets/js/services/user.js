@@ -4,7 +4,7 @@ export const createAccount = async (username, password) => {
     formData.append('password', password);
     formData.append('action', 'create');
 
-    const response = await fetch('index.php?component=user', {
+    const response = await fetch('index.php?component=create_user', {
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
@@ -14,3 +14,38 @@ export const createAccount = async (username, password) => {
     return await response.json();
 };
 
+
+export const getUsers = async (currentPage = 1) => {
+    const response = await fetch(`index.php?component=users&page=${currentPage}`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    return await response.json()
+}
+
+export const updateUser = async (form, id) =>  {
+
+    const data = new FormData(form)
+
+    const response = await fetch(`index.php?component=users&action=update&id=${id}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'POST',
+        body: data
+    })
+
+    return response.json()
+}
+
+export const removeUser = async (id) => {
+    const response = await fetch(`index.php?component=users&action=delete&id=${id}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'GET'
+    })
+    return await response.json()
+}
