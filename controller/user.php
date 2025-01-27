@@ -15,15 +15,14 @@ if (!empty($_GET['id'])) {
 
 if (isset($_POST['create_button'])) {
     $username = !empty($_POST['username']) ? cleanString($_POST['username']) : null;
-    $password = !empty($_POST['pass']) ? cleanString($_POST['pass']) : null;
+    $password = !empty($_POST['password']) ? cleanString($_POST['password']) : null;
+    $admin = !empty($_POST['is_admin']) ? cleanString($_POST['is_admin']) : 0;
     $confirmation = !empty($_POST['confirmation']) ? cleanString($_POST['confirmation']) : null;
-    $email = !empty($_POST['email']) ? cleanString($_POST['email']) : null;
-    $enabled = !empty($_POST['enabled']) ? cleanString($_POST['enabled']) : false;
     if ($password !== $confirmation) {
-        $errors[] = "Le mot de passe et sa confirmation sont différents";
+        $errors[] = "The passwords do not match";
     } else {
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $newUser = insertUser($pdo, $username, $password, $email, $enabled);
+        $newUser = insertUser($pdo, $username, $password );
         if (!is_bool($newUser)) {
             $errors[] = $newUser;
         }
@@ -33,25 +32,17 @@ if (isset($_POST['create_button'])) {
 if (isset($_POST['edit_button'])) {
     $id = cleanString($_GET['id']);
     $username = !empty($_POST['username']) ? cleanString($_POST['username']) : null;
-    $password = !empty($_POST['pass']) ? cleanString($_POST['pass']) : null;
+    $password = !empty($_POST['password']) ? cleanString($_POST['password']) : null;
+    $admin = !empty($_POST['is_admin']) ? cleanString($_POST['is_admin']) : 0;
     $confirmation = !empty($_POST['confirmation']) ? cleanString($_POST['confirmation']) : null;
-    $email = !empty($_POST['email']) ? cleanString($_POST['email']) : null;
-    $enabled = !empty($_POST['enabled']) ? cleanString($_POST['enabled']) : false;
     if (!empty($password) && !empty($confirmation) && ($password === $confirmation)) {
         $password = password_hash($password, PASSWORD_DEFAULT);
     } elseif(!empty($password) && !empty($confirmation) && ($password !== $confirmation)) {
-        $errors[] = "Le mot de passe et sa confirmation sont différents";
+        $errors[] = "The passwords do not match";
     }
 
 
-    if(empty($errors)) {
-        $updatedUser = updateUser($pdo, $id,$username, $email, $enabled, $password);
-        if (!is_bool($updatedUser)) {
-            $errors[] = $updatedUser;
-        } else {
-            $user = getUser($pdo, $_GET['id']);
-        }
-    }
+    $res = updateUser($pdo, $id, $username, $password);
 }
 
 require "view/user.php";

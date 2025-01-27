@@ -14,8 +14,8 @@ require("_partials/errors.php")
                 <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['username'] ?? ''; ?>" required>
             </div>
             <div class="mb-3">
-                <label for="pass" class="form-label">Password</label>
-                <input type="password" class="form-control" id="pass" name="pass" <?php echo ('create' === $action) ? 'required' : ''; ?>>
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" <?php echo ('create' === $action) ? 'required' : ''; ?>>
             </div>
             <div class="mb-3">
                 <label for="confirmation" class="form-label">Confirm Password</label>
@@ -28,22 +28,18 @@ require("_partials/errors.php")
                     <option value="1" <?php echo isset($user['is_admin']) && $user['is_admin'] == 1 ? 'selected' : ''; ?>>Admin</option>
                 </select>
             </div>
-            <div class="mb-3">
-                <div class="form-check form-switch">
-                    <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            id="enabled"
-                            name="enabled"
-                        <?php echo (!empty($user['enabled'])) ? 'checked' : ''; ?>
-                    >
-                    <label class="form-check-label" for="enabled">Active Account</label>
-                </div>
-            </div>
             <div class="mb-3 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary" name="<?php echo $action; ?>_button">Save</button>
             </div>
         </form>
     </div>
 </div>
+<script src="./assets/js/components/users.js" type="module"></script>
+<script type="module">
+    import {handleUserForm} from "./assets/js/components/users.js";
+
+    document.addEventListener('DOMContentLoaded', () => {
+        handleUserForm()
+    })
+</script>
+

@@ -29,7 +29,7 @@ export const updateUser = async (form, id) =>  {
 
     const data = new FormData(form)
 
-    const response = await fetch(`index.php?component=users&action=update&id=${id}`, {
+    const response = await fetch(`index.php?component=user&id=${id}`, {
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
