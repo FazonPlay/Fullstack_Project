@@ -40,16 +40,25 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     $componentName = !empty($_GET['component'])
         ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
         : (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? 'admin' : 'dashboard');
+    require "_partials/navbar.php";
 
-        require "_partials/navbar.php";
 
+    // CLEAN UP THE CODE BELOW
+
+    if ($componentName === 'login' && isset($_SESSION['auth'])) {
+            echo '<div class="alert alert-danger">Access Denied: You are already logged in.</div>';
+            require "controller/dashboard.php";
+        } elseif ($componentName === 'users' && !isset($_SESSION['auth'])) {
+            echo '<div class="alert alert-danger">Access Denied: Administrator privileges required.</div>';
+            require "controller/dashboard.php";
+        } else
         if ($componentName === 'admin' && (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true)) {
             echo '<div class="alert alert-danger">Access Denied: Administrator privileges required.</div>';
             require "controller/dashboard.php";
             } else if ($componentName === 'game' && !isset($_SESSION['auth'])) {
             echo '<div class="alert alert-danger">Access Denied: You must be logged in to play the game.</div>';
 
-            // document.location.href = 'index.php?component=login';
+            // no need to clean up the code below
         } else if (file_exists("controller/$componentName.php")) {
             require "controller/$componentName.php";
         } else {
@@ -58,6 +67,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 
     ?>
 </div>
+<?php require "_partials/_toast.html"; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

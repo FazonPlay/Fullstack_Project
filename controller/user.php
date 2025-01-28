@@ -45,4 +45,12 @@ if (isset($_POST['edit_button'])) {
     $res = updateUser($pdo, $id, $username, $password);
 }
 
+if(isset($_GET['delete'])) {
+    $id = cleanString($_GET['id']);
+    $res = deleteUser($pdo, $id);
+    if (!is_bool($res)) {
+        $errors[] = $res;
+    }
+}
+
 require "view/user.php";

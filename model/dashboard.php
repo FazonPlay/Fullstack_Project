@@ -8,10 +8,11 @@ function getTopTen(PDO $pdo): array
     return $stmt->fetchAll();
 }
 
-function playedGames(PDO $pdo): array
-{
-    $query = "SELECT u.username, COUNT(*) AS games_played FROM game_times gt JOIN users u ON u.id = gt.user_id GROUP BY gt.user_id; ";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    return $stmt->fetch();
-}
+//function getTimePlayedByUser(PDO $pdo, int $userId): array
+//{
+//    $query = "SELECT duration, created_at FROM game_times WHERE user_id = :user_id ORDER BY duration DESC";
+//    $stmt = $pdo->prepare($query);
+//    $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+//    $stmt->execute();
+//    return $stmt->fetchAll();
+//}

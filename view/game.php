@@ -1,10 +1,8 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <!-- Toast Container -->
-        <div id="toast-container"></div>
+        <div id="toast-container">
 
-        <!-- Start Game Button -->
-
+        </div>
         <h1>Memory Game</h1>
         <div id="timer" class="text-danger fw-bold">Time: 05:00</div>
     </div>
@@ -14,7 +12,8 @@
     <button id="start-game-btn" class="btn btn-primary">Start Game</button>
 
     <div id="game-board" class="row row-cols-4 g-3">
-        <!-- Cards will be dynamically added here by JavaScript -->
+
+
     </div>
 </div>
 
@@ -24,7 +23,6 @@
 
     import { initializeGame} from './assets/js/main.js';
 
-    // Start the game when the page loads
     document.addEventListener('DOMContentLoaded', () => {
         const startGameBtn = document.querySelector('#start-game-btn');
         startGameBtn.addEventListener('click', () => {

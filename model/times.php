@@ -1,5 +1,5 @@
 <?php
-function get_times(PDO $pdo): array | string {
+function getTimes (PDO $pdo): array | string {
     $query = "
        SELECT gt.id AS game_id,  u.username, gt.duration, gt.created_at 
         FROM game_times AS gt 

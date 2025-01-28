@@ -30,7 +30,7 @@ require("_partials/errors.php")
             </tr>
             </thead>
             <tbody>
-            <!-- Example of user rows dynamically added via JavaScript -->
+
             </tbody>
         </table>
     </div>
@@ -38,7 +38,7 @@ require("_partials/errors.php")
 <div class="row">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center" id="pagination">
-            <!-- Pagination links dynamically created via JavaScript -->
+
         </ul>
     </nav>
 </div>
@@ -47,7 +47,6 @@ require("_partials/errors.php")
 <script src="./assets/js/components/users.js" type="module"></script>
 <script type="module">
     import { refreshList } from './assets/js/components/users.js';
-    import { removeUser } from './assets/js/services/user.js';
 
     document.addEventListener('DOMContentLoaded', async () => {
         const previousLink = document.querySelector('#previous-link');
@@ -69,15 +68,6 @@ require("_partials/errors.php")
         });
 
         // Event listener for remove user button click
-        document.querySelector('#list-users').addEventListener('click', async (e) => {
-            if (e.target && e.target.classList.contains('remove-user')) {
-                const userId = e.target.getAttribute('data-id');
-                const confirmation = confirm('Are you sure you want to delete this user?');
-                if (confirmation) {
-                    await removeUser(userId);
-                    refreshList(currentPage); // Re-fetch and display the list after deletion
-                }
-            }
-        });
+
     });
 </script>

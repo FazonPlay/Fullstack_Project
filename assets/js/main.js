@@ -1,17 +1,13 @@
-import {generateCardImages, shuffleArray, handleCardClick, startTimer, resetGameState} from './game.js';''
-import { GAME_DURATION, CARD_PAIRS, FLIP_DELAY } from './components/shared/constant.js';
+import {generateCardImages, shuffleArray, handleCardClick, startTimer, resetGameState} from './game.js';
 export const initializeGame = () => {
-    resetGameState(); // Reset the game state
-    // Generate card images and shuffle them
+    resetGameState();
     const cardImages = generateCardImages();
-    const cards = [...cardImages, ...cardImages]; // Duplicate images for pairs
+    const cards = [...cardImages, ...cardImages];
     const shuffledCards = shuffleArray(cards);
 
-    // Clear the game board
     const gameBoard = document.querySelector('#game-board');
     gameBoard.innerHTML = '';
 
-    // Create and add card elements to the board
     shuffledCards.forEach((imagePath, index) => {
         const card = document.createElement('div');
         card.innerHTML = `
@@ -20,14 +16,13 @@ export const initializeGame = () => {
                     <div class="card-back">
                         <img src="assets/img/card-cover.png" alt="Card back">
                         </div>
-                    <img src="${imagePath}" class="card-front d-none" alt="Card image"> <!-- Image side -->
+                    <img src="${imagePath}" class="card-front d-none" alt="Card image"> 
                 </div>
             </div>
         `;
-        gameBoard.appendChild(card); // Add card to the board
-        card.addEventListener('click', () => handleCardClick(card)); // Attach click event
+        gameBoard.appendChild(card);
+        card.addEventListener('click', () => handleCardClick(card));
     });
 
-    // Start the game timer
     startTimer();
 };

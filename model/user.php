@@ -21,7 +21,7 @@ function getUser(PDO $pdo, int $id): array|string
 function insertUser(PDO $pdo, string $username, string $password): bool|string
 {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query = "INSERT INTO users (username, password) VALUES (:username, :password)"; // Removed email and enabled
+    $query = "INSERT INTO users (username, password) VALUES (:username, :password)";
     $prep = $pdo->prepare($query);
     $prep->bindValue(':password', $password);
     $prep->bindValue(':username', $username);

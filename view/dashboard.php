@@ -6,7 +6,6 @@
     </div>
 
     <div class="row gy-4">
-        <!-- Game Stats -->
         <div class="col-md-4">
             <div class="card border-primary">
                 <div class="card-body text-center">
@@ -40,7 +39,6 @@
         </div>
 
         <div class="row gy-4">
-            <!-- Game Stats -->
             <div class="col-md-4">
                 <div class="card border-primary">
                     <div class="card-body text-center">
@@ -68,7 +66,6 @@
         </div>
         <?php endif; ?>
 
-    <!-- Leaderboard Section -->
     <div class="mt-5">
         <h2 class="text-center">Top 10 Times</h2>
         <table class="table table-striped mt-3">
@@ -98,7 +95,6 @@
         </table>
     </div>
 
-    <!-- Start Game Button -->
     <div class="text-center mt-4">
         <?php if (!empty($_SESSION['auth'])): ?>
             <a href="index.php?component=game" class="btn btn-success btn-lg">

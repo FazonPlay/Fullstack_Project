@@ -4,44 +4,76 @@
  * @var bool $is_admin
  */
 ?>
-
-<table class="table">
-    <thead>
-    <tr>
-        <?php if ($is_admin): ?>
-            <th>ID</th>
-        <?php endif; ?>
-        <th>User</th>
-        <th>Time Played</th>
-        <?php if ($is_admin): ?>
-            <th>Actions</th>
-        <?php endif; ?>
-    </tr>
-    </thead>
-    <tbody>
-    <?php if (!empty($times)): ?>
-        <?php foreach ($times as $time): ?>
+<div class="row">
+    <div class="col">
+        <div class="h1 pt-2 pb-2 text-center">
+            All users
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <div class="spinner-border text-primary d-none" role="status" id="spinner">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <table class="table" id="list-times">
+            <thead>
             <tr>
-                <?php if ($is_admin): ?>
-                    <td><?= htmlspecialchars($time['game_id']) ?></td>
-                <?php endif; ?>
-                <td><?= htmlspecialchars($time['username']) ?></td>
-                <td><?= htmlspecialchars($time['duration']) ?></td>
-                <?php if ($is_admin): ?>
-                    <td>
-                        <form method="post" action="index.php?component=times">
-                            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($time['game_id']) ?>">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                <?php endif; ?>
+                <th>ID</th>
+                <th>User</th>
+                <th>Time Played</th>
+                <th>Actions</th>
             </tr>
-        <?php endforeach; ?>
+            </thead>
+            <tbody>
 
-    <?php else: ?>
-        <tr>
-            <td colspan="<?= $is_admin ? 4 : 3 ?>">No times available</td>
-        </tr>
-    <?php endif; ?>
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center" id="pagination">
+
+        </ul>
+    </nav>
+</div>
+
+<script src="./assets/js/services/time.js" type="module"></script>
+<script type="module">
+    import { refreshList } from './assets/js/components/times.js';
+    import { removeTime } from './assets/js/services/time.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const previousLink = document.querySelector('#previous-link');
+        const nextLink = document.querySelector('#next-link');
+        let currentPage = 1;
+
+        refreshList(currentPage);
+
+        previousLink.addEventListener('click', async () => {
+            if (currentPage > 1) {
+                currentPage--;
+                await refreshList(currentPage);
+            }
+        });
+
+        nextLink.addEventListener('click', async () => {
+            currentPage++;
+            await refreshList(currentPage);
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
