@@ -10,8 +10,16 @@ const LIST_USERS_ITEMS_PER_PAGE = 10;
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest'
 ) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete' && $is_admin) {
+        $user_id = intval($_POST['id']);
+        $delete_result = deleteUser($pdo, $user_id);
 
-    $page = cleanString($_GET['page']) ?? 1;
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $delete_result]);
+        exit();
+    }
+
+    $page = cleanString($_GET['page'] ?? '1');
 
     $result = getUsers($pdo, $page, LIST_USERS_ITEMS_PER_PAGE);
 
@@ -26,11 +34,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     echo json_encode(['results' => $users, 'count' => $count]);
     exit();
 
-}
-if ($_GET['component'] === 'users' && $_GET['action'] === 'delete') {
-    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        $result = deleteUser($pdo, (int)$_GET['id']);
-    }
+
+
 }
 
 require "view/users.php";

@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col">
         <div class="h1 pt-2 pb-2 text-center">
-            All users
+            All Times
         </div>
         <div class="row">
             <div class="col d-flex justify-content-center">

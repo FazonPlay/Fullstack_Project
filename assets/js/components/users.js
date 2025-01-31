@@ -1,4 +1,4 @@
-import {createAccount, getUsers, updateUser} from "../services/user.js";
+import {createAccount, getUsers, removeUser, updateUser} from "../services/user.js";
 import { showToast } from "./shared/toast.js";
 
 export const refreshList = async (page) => {
@@ -22,7 +22,7 @@ export const refreshList = async (page) => {
                             </a>
                         </td>
                         <td>
-                            <a href="index.php?component=users&action=delete&id=${data.results[i].id}">
+                            <a href="#" class="delete-user" data-id="${data.results[i].id}">
                                 <i class="fa fa-trash text-danger"></i>
                             </a>
                         </td>
@@ -37,8 +37,29 @@ export const refreshList = async (page) => {
     handlePaginationNavigation(page);
 
     spinner.classList.add('d-none');
+
+    setupDeleteButtons();
 };
 
+
+const setupDeleteButtons = () => {
+    document.querySelectorAll(".delete-user").forEach(button => {
+        button.addEventListener("click", async (e) => {
+            e.preventDefault();
+            const userId = e.target.closest("a").dataset.id;
+
+            if (!confirm("Are you sure you want to delete this user?")) return;
+
+            const result = await removeUser(userId);
+            if (result.success) {
+                showToast("User deleted successfully!");
+                await refreshList(1);
+            } else {
+                showToast("Failed to delete user.");
+            }
+        });
+    });
+};
 const getPagination = (total) => {
     const countPages = Math.ceil(total / 20);
     let paginationButton = [];

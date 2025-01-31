@@ -1,8 +1,9 @@
-import { getTimes } from "../services/time.js";
+import {getTimes, removeTime} from "../services/time.js";
+import { showToast } from "./shared/toast.js";
 
 export const refreshList = async (page) => {
     const spinner = document.querySelector('#spinner');
-    const listElement = document.querySelector('#list-times');
+    const listElement = document.querySelector('#list-users');
 
     spinner.classList.remove('d-none');
 
@@ -13,19 +14,21 @@ export const refreshList = async (page) => {
     for (let i = 0; i < data.results.length; i++) {
         listContent.push(`<tr>
                         <td>${data.results[i].id}</td>
-                        <td>${data.results[i].time}</td>
+                        <td>${data.results[i].username}</td>
+                        <td>${data.results[i].is_admin === 0 ? 'User' : 'Admin'}</td>
                         <td>
-                            <a href="index.php?component=time&id=${data.results[i].id}">
+                            <a href="index.php?component=times&id=${data.results[i].id}">
                                 <i class="fa fa-edit text-success"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="index.php?component=times&action=delete&id=${data.results[i].id}">
+                            <a href="#" class="delete-time" data-id="${data.results[i].id}">
                                 <i class="fa fa-trash text-danger"></i>
                             </a>
                         </td>
                     </tr>`);
     }
+
 
     listElement.querySelector('tbody').innerHTML = listContent.join('');
 
@@ -34,18 +37,39 @@ export const refreshList = async (page) => {
     handlePaginationNavigation(page);
 
     spinner.classList.add('d-none');
+
+    setupDeleteButtons();
 };
 
+
+const setupDeleteButtons = () => {
+    document.querySelectorAll(".delete-user").forEach(button => {
+        button.addEventListener("click", async (e) => {
+            e.preventDefault();
+            const userId = e.target.closest("a").dataset.id;
+
+            if (!confirm("Are you sure you want to delete this user?")) return;
+
+            const result = await removeTime(userId);
+            if (result.success) {
+                showToast("User deleted successfully!");
+                await refreshList(1);
+            } else {
+                showToast("Failed to delete user.");
+            }
+        });
+    });
+};
 const getPagination = (total) => {
     const countPages = Math.ceil(total / 20);
     let paginationButton = [];
-    paginationButton.push(`<li class="page-item"><a class="page-link" href="#" id="previous-link">Previous</a></li>`);
+    paginationButton.push(` <li class="page-item"><a class="page-link" href="#" id="previous-link">Previous</a></li>`);
 
     for (let i = 1; i <= countPages; i++) {
         paginationButton.push(`<li class="page-item"><a data-page="${i}" class="page-link pagination-btn" href="#">${i}</a></li>`);
     }
 
-    paginationButton.push(`<li class="page-item"><a class="page-link" href="#" id="next-link">Next</a></li>`);
+    paginationButton.push(` <li class="page-item"><a class="page-link" href="#" id="next-link">Next</a></li>`);
 
     return paginationButton.join('');
 };
@@ -59,6 +83,7 @@ const handlePaginationNavigation = (page) => {
         if (page > 1) {
             page--;
             await refreshList(page);
+
         }
     });
 
@@ -74,3 +99,6 @@ const handlePaginationNavigation = (page) => {
         await refreshList(page);
     });
 };
+
+
+
