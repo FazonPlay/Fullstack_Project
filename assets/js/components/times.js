@@ -3,36 +3,28 @@ import { showToast } from "./shared/toast.js";
 
 export const refreshList = async (page) => {
     const spinner = document.querySelector('#spinner');
-    const listElement = document.querySelector('#list-users');
+    const listElement = document.querySelector('#list-times');
 
     spinner.classList.remove('d-none');
 
     const data = await getTimes(page);
 
-    const listContent = [];
+    const listContent = data.results.map(time => `
+        <tr>
+            <td>${time.game_id}</td>
+            <td>${time.username}</td>
+            <td>${time.duration} seconds</td>
+            <td>
+                <a href="#" class="delete-time" data-id="${time.game_id}">
+                    <i class="fa fa-trash text-danger"></i>
+                </a>
+            </td>
+        </tr>
+    `).join('');
 
-    for (let i = 0; i < data.results.length; i++) {
-        listContent.push(`<tr>
-                        <td>${data.results[i].id}</td>
-                        <td>${data.results[i].username}</td>
-                        <td>${data.results[i].is_admin === 0 ? 'User' : 'Admin'}</td>
-                        <td>
-                            <a href="index.php?component=times&id=${data.results[i].id}">
-                                <i class="fa fa-edit text-success"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="delete-time" data-id="${data.results[i].id}">
-                                <i class="fa fa-trash text-danger"></i>
-                            </a>
-                        </td>
-                    </tr>`);
-    }
+    listElement.querySelector('tbody').innerHTML = listContent;
 
-
-    listElement.querySelector('tbody').innerHTML = listContent.join('');
-
-    document.querySelector('#pagination').innerHTML = getPagination(data.count.total);
+    document.querySelector('#pagination').innerHTML = getPagination(data.total);
 
     handlePaginationNavigation(page);
 
@@ -42,20 +34,21 @@ export const refreshList = async (page) => {
 };
 
 
+
 const setupDeleteButtons = () => {
-    document.querySelectorAll(".delete-user").forEach(button => {
+    document.querySelectorAll(".delete-time").forEach(button => {
         button.addEventListener("click", async (e) => {
             e.preventDefault();
-            const userId = e.target.closest("a").dataset.id;
+            const timeId = e.target.closest("a").dataset.id;
 
-            if (!confirm("Are you sure you want to delete this user?")) return;
+            if (!confirm("Are you sure you want to delete this time?")) return;
 
-            const result = await removeTime(userId);
+            const result = await removeTime(timeId);
             if (result.success) {
-                showToast("User deleted successfully!");
+                showToast("Time deleted successfully!");
                 await refreshList(1);
             } else {
-                showToast("Failed to delete user.");
+                showToast("Failed to delete time.");
             }
         });
     });

@@ -40,9 +40,9 @@
 </div>
 
 <script src="./assets/js/services/time.js" type="module"></script>
+<script src="./assets/js/components/times.js" type="module"></script>
 <script type="module">
     import { refreshList } from './assets/js/components/times.js';
-    import { removeTime } from './assets/js/services/time.js';
 
     document.addEventListener('DOMContentLoaded', async () => {
         const previousLink = document.querySelector('#previous-link');
@@ -62,9 +62,10 @@
             currentPage++;
             await refreshList(currentPage);
         });
+
+
     });
 </script>
-
 
 
 
