@@ -71,9 +71,9 @@
         <table class="table table-striped mt-3">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Player</th>
-                <th scope="col">Time</th>
+                <th scope="col">Username</th>
+                <th scope="col">Time in Seconds</th>
+                <th scope="col">Date and Time Played</th>
             </tr>
             </thead>
             <tbody>

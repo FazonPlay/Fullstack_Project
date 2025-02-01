@@ -45,24 +45,7 @@
     import { refreshList } from './assets/js/components/times.js';
 
     document.addEventListener('DOMContentLoaded', async () => {
-        const previousLink = document.querySelector('#previous-link');
-        const nextLink = document.querySelector('#next-link');
-        let currentPage = 1;
-
-        refreshList(currentPage);
-
-        previousLink.addEventListener('click', async () => {
-            if (currentPage > 1) {
-                currentPage--;
-                await refreshList(currentPage);
-            }
-        });
-
-        nextLink.addEventListener('click', async () => {
-            currentPage++;
-            await refreshList(currentPage);
-        });
-
+        refreshList(1);
 
     });
 </script>

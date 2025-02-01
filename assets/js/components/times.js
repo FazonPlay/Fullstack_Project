@@ -71,6 +71,11 @@ const handlePaginationNavigation = (page) => {
     const previousLink = document.querySelector('#previous-link');
     const nextLink = document.querySelector('#next-link');
     const paginationBtns = document.querySelectorAll('.pagination-btn');
+    if (page === 1) {
+        previousLink.classList.add('disabled');
+    } else {
+        previousLink.classList.remove('disabled');
+    }
 
     previousLink.addEventListener('click', async () => {
         if (page > 1) {
