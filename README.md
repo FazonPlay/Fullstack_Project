@@ -22,7 +22,10 @@ To install the project, follow these steps:
 ### 1️⃣ Clone the Repository:
 ```sh
 git clone https://github.com/FazonPlay/Fullstack_Project
+
+cd Fullstack_Project
 ```
+
 
 ### 2️⃣ Install Dependencies:
 Ensure **Composer** is installed, then navigate to the project directory and run:
@@ -41,7 +44,7 @@ Create a `.env` file in the root directory with the following:
 ```
 DB_HOST=""
 DB_USER=""
-DB_PASS=""
+DB_PASSWORD=""
 DB_NAME=""
 ```
 Replace the values with your actual database credentials.
