@@ -1,6 +1,7 @@
 
 import { saveGameTime } from './services/saveState.js';
 import { CARD_PAIRS, GAME_DURATION, FLIP_DELAY } from './components/shared/constant.js';
+import {showModal} from "./components/shared/modal";
 
 let timeLeft = GAME_DURATION;
 let timer = null;
@@ -55,7 +56,7 @@ export const handleCardClick = (card) => {
     }
 };
 
-export const checkForMatch = () => {
+const checkForMatch = () => {
     const [card1, card2] = flippedCards;
     const image1 = card1.querySelector('.card').dataset.image;
     const image2 = card2.querySelector('.card').dataset.image;
@@ -80,10 +81,32 @@ export const checkForMatch = () => {
     }
 };
 
+const gameHeader = () => {
+    // Check if timer and progress bar already exist
+    let timerElement = document.querySelector('#timer');
+    let progressBarElement = document.querySelector('#progress-bar');
+
+    // If they don't exist, create and append them
+    if (!timerElement) {
+        timerElement = document.createElement('div');
+        timerElement.setAttribute('id', 'timer');
+        document.querySelector('#game-header').appendChild(timerElement);
+    }
+
+    if (!progressBarElement) {
+        progressBarElement = document.createElement('div');
+        progressBarElement.setAttribute('id', 'progress-bar');
+        progressBarElement.style.width = '100%'; // Initially full width
+        document.querySelector('#game-header').appendChild(progressBarElement);
+    }
+};
+
 export const startTimer = () => {
     clearInterval(timer);
     timer = setInterval(() => {
         timeLeft--;
+
+        gameHeader(); // Ensure elements exist
         updateTimerDisplay();
         updateProgressBar();
 
@@ -93,21 +116,21 @@ export const startTimer = () => {
     }, 1000);
 };
 
-export const updateTimerDisplay = () => {
+const updateTimerDisplay = () => {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
     document.querySelector('#timer').textContent =
         `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 };
 
-export const updateProgressBar = () => {
+const updateProgressBar = () => {
     const progress = (timeLeft / GAME_DURATION) * 100;
     const progressBar = document.querySelector('#progress-bar');
     progressBar.style.width = `${progress}%`;
 };
 
 
-export const endGame = async (isWin) => {
+const endGame = async (isWin) => {
     clearInterval(timer);
     isGameLocked = true;
 
@@ -117,9 +140,9 @@ export const endGame = async (isWin) => {
     if(isWin) {
     const timeSpent = GAME_DURATION - timeLeft;
         await saveGameTime(timeSpent);
-        alert('Congratulations! You won the game!');
+        showModal('Congratulations! You won the game!');
     } else {
-        alert('Time is up! Game over!');
+        showModal('Time is up! Game over!');
     }
 };
 

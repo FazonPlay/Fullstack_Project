@@ -8,7 +8,7 @@ require("_partials/errors.php")
 <div class="row">
     <div class="col">
         <div class="h1 pt-2 pb-2 text-center">Create / Edit User</div>
-        <form action="" method="post">
+        <form action=""  id="user-form" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['username'] ?? ''; ?>" required>
@@ -29,17 +29,8 @@ require("_partials/errors.php")
                 </select>
             </div>
             <div class="mb-3 d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary" name="<?php echo $action; ?>_button">Save</button>
+                <button type="submit" class="btn btn-primary" id="valid-form-user" name="<?php echo $action; ?>_button">Save</button>
             </div>
         </form>
     </div>
 </div>
-<script src="./assets/js/components/users.js" type="module"></script>
-<script type="module">
-    import {handleUserForm} from "./assets/js/components/users.js";
-
-    document.addEventListener('DOMContentLoaded', () => {
-        handleUserForm()
-    })
-</script>
-

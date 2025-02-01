@@ -8,11 +8,11 @@ function getTopTen(PDO $pdo): array
     return $stmt->fetchAll();
 }
 
-//function getTimePlayedByUser(PDO $pdo, int $userId): array
-//{
-//    $query = "SELECT duration, created_at FROM game_times WHERE user_id = :user_id ORDER BY duration DESC";
-//    $stmt = $pdo->prepare($query);
-//    $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
-//    $stmt->execute();
-//    return $stmt->fetchAll();
-//}
+function getTimePlayedByUser(PDO $pdo, int $userId): array
+{
+    $query = "SELECT duration, created_at FROM game_times WHERE user_id = :user_id ORDER BY duration DESC";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}

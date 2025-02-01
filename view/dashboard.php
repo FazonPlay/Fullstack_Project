@@ -102,7 +102,7 @@
             </a>
         <?php else: ?>
             <a href="index.php?component=login" class="btn btn-success btn-lg">
-                Start New Game
+                Login to Play
             </a>
         <?php endif; ?>
     </div>

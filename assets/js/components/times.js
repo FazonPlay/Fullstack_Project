@@ -77,6 +77,7 @@ const handlePaginationNavigation = (page) => {
         previousLink.classList.remove('disabled');
     }
 
+
     previousLink.addEventListener('click', async () => {
         if (page > 1) {
             page--;

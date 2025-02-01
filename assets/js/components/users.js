@@ -85,6 +85,7 @@ const handlePaginationNavigation = (page) => {
         previousLink.classList.remove('disabled');
     }
 
+
     previousLink.addEventListener('click', async () => {
 
         if (page > 1) {
@@ -114,6 +115,8 @@ export const handleUserForm = () => {
 
     validBtn.addEventListener('click', async (e) => {
         const form = document.querySelector('#user-form');
+        e.preventDefault();
+
 
         if (!form.checkValidity()) {
             form.reportValidity();
