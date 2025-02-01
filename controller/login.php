@@ -26,7 +26,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
             $_SESSION["auth"] = true;
             $_SESSION["username"] = $user['username'];
             $_SESSION["is_admin"] = (bool)$user['is_admin'];
-            $_SESSION['user_id'] = $user['id']; // Store user id in session
+            $_SESSION['user_id'] = $user['id'];
 
             header("Content-Type: application/json");
             echo json_encode(['authentication' => true]);

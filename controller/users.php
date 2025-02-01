@@ -4,7 +4,6 @@ require "model/create_user.php";
 
 $is_admin = $_SESSION["is_admin"] === true;
 
-
 const LIST_USERS_ITEMS_PER_PAGE = 10;
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&

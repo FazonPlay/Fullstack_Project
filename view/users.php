@@ -50,6 +50,7 @@ require("_partials/errors.php")
 
     document.addEventListener('DOMContentLoaded', async () => {
         refreshList(1);
+
     });
 
 </script>

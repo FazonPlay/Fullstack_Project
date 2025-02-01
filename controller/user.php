@@ -40,8 +40,6 @@ if (isset($_POST['edit_button'])) {
     } elseif(!empty($password) && !empty($confirmation) && ($password !== $confirmation)) {
         $errors[] = "The passwords do not match";
     }
-
-
     $res = updateUser($pdo, $id, $username, $password);
 }
 
