@@ -1,70 +1,93 @@
-Hi, welcome to my (mostly finished) project, Memory Game! 
-This is a simple game where you have to match pairs of cards.
-The game is built with PHP, HTML, and JavaScript.
+# 🎮 Memory Game
 
-Now this project whilst mostly finished, is not perfect. There are a few *issues* that I would like to address before I consider it complete.
-1. During the user creation/modification, the data whilst being saved, you won't know it until you go back and check the user list.
-2. The user list is not sorted in any way, so it can be hard to find a specific user.
-For now that's all but ill address these issues in the future.
-## Installation
-To install this project you'll first need to clone the repository.
+Welcome to my (mostly finished) project, **Memory Game!** 🃏
+This is a simple yet fun game where you match pairs of cards.
+The game is built using **PHP, HTML, and JavaScript**.
+
+---
+
+## 🚧 Current Issues
+Although the project is mostly complete, a few issues remain:
+
+1. **User Creation/Modification** - Data is saved, but changes aren't immediately visible. You'll need to refresh or check the user list manually.
+2. **Unsorted User List** - Finding a specific user can be difficult since the list isn't sorted.
+
+I'll be addressing these in future updates! 🚀
+
+---
+
+## 🛠 Installation
+To install the project, follow these steps:
+
+### 1️⃣ Clone the Repository:
+```sh
 git clone https://github.com/FazonPlay/Fullstack_Project
+```
 
-Before proceeding make sure you have Composer installed on your machine.
-
-Once you have Composer installed, navigate to the project directory and run the following command:
+### 2️⃣ Install Dependencies:
+Ensure **Composer** is installed, then navigate to the project directory and run:
+```sh
 composer require fakerphp/faker
+```
+This installs Faker, which generates fake user data.
 
-This will install the Faker library which is used to generate fake data for the user list.
-
-You'll also need another library to safely connect to the database, to install this library run the following command:
+You'll also need **Dotenv** for secure database connections:
+```sh
 composer require vlucas/phpdotenv
+```
 
-This will install the Dotenv library which is used to safely connect to the database.
-You'll also need to create a .env file in the root directory of the project and replace the values with your own.
-Example:
+### 3️⃣ Setup Database Configuration:
+Create a `.env` file in the root directory with the following:
+```
+DB_HOST=""
+DB_USER=""
+DB_PASS=""
+DB_NAME=""
+```
+Replace the values with your actual database credentials.
 
-DB_HOST=localhost
-DB_USER=root
-DB_PASS=password
-DB_NAME=memory_game
+### 4️⃣ Create the Database:
+Use **phpMyAdmin** or any database management tool to create a database with the name specified in your `.env` file.
 
-Just replace the values with your own and you should be good to go.
-Now you'll also need to create a database with the name you specified in the .env file.
-You can do this by using phpmyadmin
-Once that's done you can use the fixtures.php script in the command line to generate all of the necessary tables and data for testing.
+### 5️⃣ Generate Database Tables & Test Data:
+Run the `fixtures.php` script in the command line to generate the necessary tables and sample data.
 
+---
 
+## 🎮 Usage
+Once installed, open `index.php` to access the **dashboard**, where you’ll find:
 
-## Usage
+✅ **Top 10 Players**
+✅ **Best Times**
+✅ **Login Button**
 
-Once you open up index.php you'll be greeted with a login screen.
-You can either login with an existing user or create a new one.
-Since you used the script there should be an admin user with the following credentials:
-Username: admin
-Password: admin
-When logged in as an admin you get access to:
-- The user list (with full CRUD functionality)
-- The time list (with delete functionality)
-- An admin panel for easy navigation
-- Everything a regular user has access to
+### 🔑 Logging In
+- Click **Login** to access the login page.
+- Register or log in as an **Admin** for full access.
 
-When logged in as a regular user you get access to:
-- The game itself
-- dashboard with your stats (and top 10)
+### 👤 Admin Features
+- **Admin Panel**
+- **Full CRUD User List** (Create, Read, Update, Delete)
+- **Time List Management** (Delete only)
+- Plus everything a normal user can do!
 
-There are some security measures in place to prevent regular users from accessing the admin panel
-Or other components they shouldn't have access to, same goes to non-logged in users.
+### 🎲 Normal User Features
+- **Play the Game**
+- **View Dashboard (Top 10 Players & Best Times)**
+- **Logout**
 
-Now when you try to create a new user, you'll be greeted with a form.
-Like i stated before, the actual sql query is being executed,
-but you won't know it until you go back and check the user list,
+---
 
+## 🤝 Contributors
+- **FazonPlay**
+- **David**
+- **RoshiBlack**
 
+---
 
+## 📜 License
+📝 Open-source license (TBD)
 
+---
+✨ *Thank you for checking out my project!* ✨
 
-## Contributing
-
-## License
-[]: # (END)
