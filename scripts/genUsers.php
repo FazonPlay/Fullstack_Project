@@ -1,30 +1,4 @@
 <?php
-///**
-// * @var PDO $pdo
-// */
-//require '../vendor/autoload.php';
-//$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..'); // Adjust the path to your .env file
-//$dotenv->load();
-//require '../includes/database.php';
-//
-//
-//
-//
-//$faker = Faker\Factory::create('en_US');
-//
-//for ($i = 0; $i <= 100; $i++) {
-//    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//    $query = "INSERT INTO users (username, password) VALUES (:username, :password)";
-//    $prep = $pdo->prepare($query);
-//    $prep->bindValue(':password', password_hash($faker->password, PASSWORD_DEFAULT));
-//    $prep->bindValue(':username', $faker->userName);
-//    try {
-//        $prep->execute();
-//    } catch (PDOException $e) {
-//        echo "Error: " . $e->getCode() . ' : ' . $e->getMessage();
-//    }
-//    $prep->closeCursor();
-//}
 
 /**
  * @var PDO $pdo
