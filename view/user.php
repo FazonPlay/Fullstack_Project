@@ -21,13 +21,6 @@ require("_partials/errors.php")
                 <label for="confirmation" class="form-label">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmation" name="confirmation" <?php echo ('create' === $action) ? 'required' : ''; ?>>
             </div>
-            <div class="mb-3">
-                <label for="is_admin" class="form-label">User Type</label>
-                <select name="is_admin" id="is_admin" class="form-control" required>
-                    <option value="0" <?php echo isset($user['is_admin']) && $user['is_admin'] == 0 ? 'selected' : ''; ?>>User</option>
-                    <option value="1" <?php echo isset($user['is_admin']) && $user['is_admin'] == 1 ? 'selected' : ''; ?>>Admin</option>
-                </select>
-            </div>
             <div class="mb-3 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary" id="valid-form-user" name="<?php echo $action; ?>_button">Save</button>
             </div>

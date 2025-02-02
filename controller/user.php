@@ -16,7 +16,6 @@ if (!empty($_GET['id'])) {
 if (isset($_POST['create_button'])) {
     $username = !empty($_POST['username']) ? cleanString($_POST['username']) : null;
     $password = !empty($_POST['password']) ? cleanString($_POST['password']) : null;
-    $admin = !empty($_POST['is_admin']) ? cleanString($_POST['is_admin']) : 0;
     $confirmation = !empty($_POST['confirmation']) ? cleanString($_POST['confirmation']) : null;
     if ($password !== $confirmation) {
         $errors[] = "The passwords do not match";
@@ -33,7 +32,6 @@ if (isset($_POST['edit_button'])) {
     $id = cleanString($_GET['id']);
     $username = !empty($_POST['username']) ? cleanString($_POST['username']) : null;
     $password = !empty($_POST['password']) ? cleanString($_POST['password']) : null;
-    $admin = !empty($_POST['is_admin']) ? cleanString($_POST['is_admin']) : 0;
     $confirmation = !empty($_POST['confirmation']) ? cleanString($_POST['confirmation']) : null;
     if (!empty($password) && !empty($confirmation) && ($password === $confirmation)) {
         $password = password_hash($password, PASSWORD_DEFAULT);
@@ -42,7 +40,5 @@ if (isset($_POST['edit_button'])) {
     }
     $res = updateUser($pdo, $id, $username, $password);
 }
-
-
 
 require "view/user.php";

@@ -2,17 +2,33 @@
 
 function getTopTen(PDO $pdo): array
 {
-    $query = "SELECT game_times.duration, game_times.created_at, users.username FROM game_times JOIN users ON game_times.user_id = users.id ORDER BY `game_times`.`duration` DESC LIMIT 10 ";
+    $query = "SELECT game_times.duration, game_times.created_at, users.username FROM game_times JOIN users ON game_times.user_id = users.id ORDER BY `game_times`.`duration` ASC LIMIT 10 ";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll();
 }
-
-function getTimePlayedByUser(PDO $pdo, int $userId): array
+function getGamesPlayed(PDO $pdo, int $user_id): int
 {
-    $query = "SELECT duration, created_at FROM game_times WHERE user_id = :user_id ORDER BY duration DESC";
+    $query = "SELECT COUNT(*) FROM game_times WHERE user_id = ?";
     $stmt = $pdo->prepare($query);
-    $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchAll();
+    $stmt->execute([$user_id]);
+    return (int) $stmt->fetchColumn();
+}
+
+function getBestTime(PDO $pdo, int $user_id): ?int
+{
+    $query = "SELECT MIN(duration) FROM game_times WHERE user_id = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$user_id]);
+    $result = $stmt->fetchColumn();
+    return $result !== false ? (int) $result : null;
+}
+
+function getLastPlayed(PDO $pdo, int $user_id): ?string
+{
+    $query = "SELECT MAX(created_at) FROM game_times WHERE user_id = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$user_id]);
+    $result = $stmt->fetchColumn();
+    return $result !== false ? $result : null;
 }

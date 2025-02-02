@@ -1,14 +1,13 @@
 
 import { saveGameTime } from './services/saveState.js';
 import { CARD_PAIRS, GAME_DURATION, FLIP_DELAY } from './components/shared/constant.js';
-import {showModal} from "./components/shared/modal";
+import {showModal} from "./components/shared/modal.js";
 
 let timeLeft = GAME_DURATION;
 let timer = null;
 let flippedCards = [];
 let matchedPairs = 0;
 let isGameLocked = false;
-
 
 export const generateCardImages = () => {
     const cardImages = [];
@@ -18,6 +17,8 @@ export const generateCardImages = () => {
     return cardImages;
 };
 
+
+// after encountering issues with the game state, now it'll reset.
 export const resetGameState = () => {
     timeLeft = GAME_DURATION;
     timer = null;
@@ -26,61 +27,14 @@ export const resetGameState = () => {
     isGameLocked = false;
 };
 
-
-
+// this function uses some math algorithm to shuffle the array (AI)
 export const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)); // Random index
-        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 };
-
-
-export const handleCardClick = (card) => {
-    if (isGameLocked || flippedCards.length >= 2) return;
-
-    const cardElement = card.querySelector('.card');
-    const cardBack = cardElement.querySelector('.card-back');
-    const cardFront = cardElement.querySelector('.card-front');
-
-    if (!cardBack.classList.contains('d-none')) {
-        cardBack.classList.add('d-none');
-        cardFront.classList.remove('d-none');
-        flippedCards.push(card);
-
-        if (flippedCards.length === 2) {
-            isGameLocked = true;
-            checkForMatch();
-        }
-    }
-};
-
-const checkForMatch = () => {
-    const [card1, card2] = flippedCards;
-    const image1 = card1.querySelector('.card').dataset.image;
-    const image2 = card2.querySelector('.card').dataset.image;
-
-    if (image1 === image2) {
-        matchedPairs++;
-        flippedCards = [];
-        isGameLocked = false;
-
-        if (matchedPairs === CARD_PAIRS) {
-            endGame(true);
-        }
-    } else {
-        setTimeout(() => {
-            card1.querySelector('.card-back').classList.remove('d-none');
-            card1.querySelector('.card-front').classList.add('d-none');
-            card2.querySelector('.card-back').classList.remove('d-none');
-            card2.querySelector('.card-front').classList.add('d-none');
-            flippedCards = [];
-            isGameLocked = false;
-        }, FLIP_DELAY);
-    }
-};
-
 
 
 export const startTimer = () => {
@@ -95,6 +49,53 @@ export const startTimer = () => {
             endGame(false);
         }
     }, 1000);
+};
+
+// the function i made originally didnt work with animations, reworked with AI
+export const handleCardClick = (cardsContainer) => {
+    // Get the actual card element from the container
+    const cardsElement = cardsContainer.classList.contains('cards')
+        ? cardsContainer
+        : cardsContainer.querySelector('.cards');
+
+    if (isGameLocked ||
+        cardsElement.classList.contains('flipped') ||
+        cardsElement.classList.contains('matched')) return;
+
+    cardsElement.classList.add('flipped');
+    flippedCards.push(cardsElement);
+
+    if (flippedCards.length === 2) {
+        isGameLocked = true;
+        checkForMatch();
+    }
+};
+
+// same here, this one had to be modified with AI to work with the function above
+const checkForMatch = () => {
+    const [firstCard, secondCard] = flippedCards;
+    const image1 = firstCard.dataset.image;
+    const image2 = secondCard.dataset.image;
+
+    if (image1 === image2) {
+        matchedPairs++;
+        // Keep cards flipped and mark as matched
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        flippedCards = [];
+        isGameLocked = false;
+
+        if (matchedPairs === CARD_PAIRS) {
+            endGame(true);
+        }
+    } else {
+        setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+            flippedCards = [];
+            isGameLocked = false;
+        }, FLIP_DELAY);
+    }
 };
 
 const updateTimerDisplay = () => {

@@ -10,15 +10,15 @@
             <div class="card border-primary">
                 <div class="card-body text-center">
                     <h5 class="card-title">Games Played</h5>
-                    <p class="card-text display-6">10</p>
+                    <p class="card-text display-6"><?= htmlspecialchars($gPlayed) ?></p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card border-success">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Best Time</h5>
-                    <p class="card-text display-6">0:42</p>
+                    <h5 class="card-title">Best Time (in seconds)</h5>
+                    <p class="card-text display-6"><?= htmlspecialchars($bestTime) ?></p>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <div class="card border-info">
                 <div class="card-body text-center">
                     <h5 class="card-title">Last Played</h5>
-                    <p class="card-text display-6">Jan 26, 2025</p>
+                    <p class="card-text display-6"><?= htmlspecialchars($lastPlayed ?? 'No games played yet.') ?></p>
                 </div>
             </div>
         </div>
@@ -38,32 +38,32 @@
             <p class="lead">Check out your progress and compete for the best time!</p>
         </div>
 
-        <div class="row gy-4">
-            <div class="col-md-4">
-                <div class="card border-primary">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Games Played</h5>
-                        <p class="card-text display-6">10</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card border-success">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Best Time</h5>
-                        <p class="card-text display-6">0:42</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card border-info">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Last Played</h5>
-                        <p class="card-text display-6">Jan 26, 2025</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="row gy-4">-->
+<!--            <div class="col-md-4">-->
+<!--                <div class="card border-primary">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <h5 class="card-title">Games Played</h5>-->
+<!--                        <p class="card-text display-6">10</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--                <div class="card border-success">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <h5 class="card-title">Best Time</h5>-->
+<!--                        <p class="card-text display-6">0:42</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--                <div class="card border-info">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <h5 class="card-title">Last Played</h5>-->
+<!--                        <p class="card-text display-6">Jan 26, 2025</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <?php endif; ?>
 
     <div class="mt-5">

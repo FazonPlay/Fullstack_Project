@@ -11,19 +11,27 @@ export const initializeGame = () => {
     gameBoard.innerHTML = '';
 
     shuffledCards.forEach((imagePath, index) => {
-        const card = document.createElement('div');
-        card.innerHTML = `
-            <div class="card" data-card-id="${index}" data-image="${imagePath}">
-                <div class=" align-items-center justify-content-center">
-                    <div class="card-back">
-                        <img src="assets/img/card-cover.png" alt="Card back">
-                        </div>
-                    <img src="${imagePath}" class="card-front d-none" alt="Card image"> 
+        const cardsContainer = document.createElement('div');
+        cardsContainer.innerHTML = `
+        <div class="cards" data-card-id="${index}" data-image="${imagePath}">
+            <div class="cards-inner">
+                <div class="cards-back">
+                    <img src="assets/img/card-cover.png" alt="Card back">
+                </div>
+                <div class="cards-front">
+                    <img src="${imagePath}" alt="Card image">
                 </div>
             </div>
-        `;
-        gameBoard.appendChild(card);
-        card.addEventListener('click', () => handleCardClick(card));
+        </div>
+    `;
+        const cardsElement = cardsContainer.querySelector('.cards');
+
+        cardsElement.addEventListener('click', () => {
+            handleCardClick(cardsElement);
+        });
+
+            // the part that handles animations was also reworked with AI
+        gameBoard.appendChild(cardsContainer);
     });
 
     startTimer();

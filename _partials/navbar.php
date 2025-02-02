@@ -8,12 +8,6 @@
                 <li class="nav-item">
                         <a href="index.php?component=admin" class="btn btn-primary">Admin Panel</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?component=users">Manage Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?component=times">Manage Times</a>
-                </li>
                 <?php endif; ?>
 
                 <li class="nav-item">

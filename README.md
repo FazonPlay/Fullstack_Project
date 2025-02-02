@@ -11,8 +11,7 @@ Although the project is mostly complete, a few issues remain:
 
 1. **User Creation/Modification** - Data is saved, but changes aren't immediately visible. You'll need to refresh or check the user list manually.
 2. **Unsorted User List** - Finding a specific user can be difficult since the list isn't sorted.
-
-I'll be addressing these in future updates! 🚀
+3. **You can delete yourself whilst an admin**
 
 ---
 
@@ -53,7 +52,7 @@ Replace the values with your actual database credentials.
 Use **phpMyAdmin** or any database management tool to create a database with the name specified in your `.env` file.
 
 ### 5️⃣ Generate Database Tables & Test Data:
-Run the `fixtures.php` script in the command line to generate the necessary tables and sample data.
+Run the `genUsers.php` script first, followed by `genTimes.php` in the command line to generate the necessary tables and sample data.
 
 ---
 
@@ -70,7 +69,7 @@ Once installed, open `index.php` to access the **dashboard**, where you’ll fin
 
 ### 👤 Admin Features
 - **Admin Panel**
-- **Full CRUD User List** (Create, Read, Update, Delete)
+- **Full CRUD User List** (Note, you cannot create a new admin)
 - **Time List Management** (Delete only)
 - Plus everything a normal user can do!
 

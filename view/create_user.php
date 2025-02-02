@@ -54,7 +54,7 @@
             )
 
             if (createResult.hasOwnProperty('success')) {
-                window.location.href = 'index.php?component=login'
+                document.location.href = 'index.php?component=login'
             } else if (createResult.hasOwnProperty('errors')) {
                 const errors = []
                 for (let i = 0; i < createResult.errors.length; i++) {
