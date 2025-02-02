@@ -52,8 +52,19 @@ Replace the values with your actual database credentials.
 ### 4️⃣ Create the Database:
 Use **phpMyAdmin** or any database management tool to create a database with the name specified in your `.env` file.
 
-### 5️⃣ Generate Database Tables & Test Data:
+
+### 5️⃣ Import the Database:
+Import the `memory_game.sql` file from the `database` folder into your database.
+
+### 6️⃣ Generate Database Tables & Test Data:
 Run the `genUsers.php` script first, followed by `genTimes.php` in the command line to generate the necessary tables and sample data.
+
+```sh
+cd scripts
+php genUsers.php
+php genTimes.php
+```
+### ONLY RUN THIS AFTER IMPORTING THE DATABASE
 
 ---
 
