@@ -40,7 +40,8 @@ composer require vlucas/phpdotenv
 ```
 
 ### 3️⃣ Setup Database Configuration:
-Create a `.env` file in the root directory with the following:
+There's a `env.dist.` file in the root directory. Copy it and rename it to `.env`. 
+This file contains the database configuration settings:
 ```
 DB_HOST=""
 DB_USER=""
