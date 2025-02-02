@@ -6,7 +6,7 @@
         <h1>Memory Game</h1>
         <div id="timer" class="text-danger fw-bold">Time: 05:00</div>
     </div>
-    <div class="progress mb-3">
+    <div class="progress mb-3" id="progress">
         <div id="progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <button id="start-game-btn" class="btn btn-primary">Start Game</button>
@@ -40,6 +40,8 @@
     import { initializeGame} from './assets/js/main.js';
 
     document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#timer').classList.add('d-none');
+        document.querySelector('#progress').classList.add('d-none');
         const startGameBtn = document.querySelector('#start-game-btn');
         startGameBtn.addEventListener('click', () => {
 

@@ -81,32 +81,13 @@ const checkForMatch = () => {
     }
 };
 
-const gameHeader = () => {
-    // Check if timer and progress bar already exist
-    let timerElement = document.querySelector('#timer');
-    let progressBarElement = document.querySelector('#progress-bar');
 
-    // If they don't exist, create and append them
-    if (!timerElement) {
-        timerElement = document.createElement('div');
-        timerElement.setAttribute('id', 'timer');
-        document.querySelector('#game-header').appendChild(timerElement);
-    }
-
-    if (!progressBarElement) {
-        progressBarElement = document.createElement('div');
-        progressBarElement.setAttribute('id', 'progress-bar');
-        progressBarElement.style.width = '100%'; // Initially full width
-        document.querySelector('#game-header').appendChild(progressBarElement);
-    }
-};
 
 export const startTimer = () => {
     clearInterval(timer);
     timer = setInterval(() => {
         timeLeft--;
 
-        gameHeader(); // Ensure elements exist
         updateTimerDisplay();
         updateProgressBar();
 

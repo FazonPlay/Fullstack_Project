@@ -1,5 +1,7 @@
 import {generateCardImages, shuffleArray, handleCardClick, startTimer, resetGameState} from './game.js';
 export const initializeGame = () => {
+    document.querySelector('#timer').classList.remove('d-none');
+    document.querySelector('#progress').classList.remove('d-none');
     resetGameState();
     const cardImages = generateCardImages();
     const cards = [...cardImages, ...cardImages];
