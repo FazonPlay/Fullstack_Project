@@ -40,24 +40,41 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         ? htmlspecialchars($_GET['component'], ENT_QUOTES, 'UTF-8')
         : (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? 'admin' : 'dashboard');
     require "_partials/navbar.php";
-    if ($componentName === 'login' && isset($_SESSION['auth'])) {
-            echo '<div class="alert alert-danger">Access Denied: You are already logged in.</div>';
-            require "controller/dashboard.php";
-        } elseif ($componentName === 'users' && !isset($_SESSION['auth'])) {
-            echo '<div class="alert alert-danger">Access Denied: Administrator privileges required.</div>';
-            require "controller/dashboard.php";
-        } else
-        if ($componentName === 'admin' && (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true)) {
-            echo '<div class="alert alert-danger">Access Denied: Administrator privileges required.</div>';
-            require "controller/dashboard.php";
-            } else if ($componentName === 'game' && !isset($_SESSION['auth'])) {
-            echo '<div class="alert alert-danger">Access Denied: You must be logged in to play the game.</div>';
 
-        } else if (file_exists("controller/$componentName.php")) {
+
+    switch ($componentName) {
+        case 'login':
+            if (isset($_SESSION['auth'])) {
+                echo '<div class="alert alert-danger">Access Denied: You are already logged in.</div>';
+                require "controller/dashboard.php";
+                break;
+            }
             require "controller/$componentName.php";
-        } else {
-            throw new Exception("Component '$componentName' does not exist");
-        }
+            break;
+        case 'users': case 'user': case 'times': case 'admin':
+            if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+                echo '<div class="alert alert-danger">Access Denied: Administrator privileges required.</div>';
+                require "controller/dashboard.php";
+                break;
+            }
+            require "controller/$componentName.php";
+            break;
+        case 'game':
+            if (!isset($_SESSION['auth'])) {
+                echo '<div class="alert alert-danger">Access Denied: You must be logged in to play the game.</div>';
+                break;
+            }
+            require "controller/$componentName.php";
+            break;
+        default:
+            if (file_exists("controller/$componentName.php")) {
+                require "controller/$componentName.php";
+            } else {
+                throw new Exception("Component '$componentName' does not exist");
+            }
+    }
+
+
 
     ?>
 </div>

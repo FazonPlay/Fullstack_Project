@@ -12,6 +12,7 @@ Although the project is mostly complete, a few issues remain:
 1. **User Creation/Modification** - Data is saved, but changes aren't immediately visible. You'll need to refresh or check the user list manually.
 2. **Unsorted User List** - Finding a specific user can be difficult since the list isn't sorted.
 3. **You can delete yourself whilst an admin**
+4. **After account creation, you have to manually go back to the login page**
 
 ---
 
